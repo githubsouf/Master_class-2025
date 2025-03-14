@@ -112,7 +112,7 @@ function App() {
               <p className="text-sm">1.2K Visitors on sécuriser</p>
             </div>
             <div className="bg-gray-800 p-4 rounded-lg text-center">
-              <p className="text-2xl font-bold text-blue-400">42</p>
+              <p className="text-2xl font-bold text-blue-400">44</p>
               <p className="text-sm">Places disponible</p>
             </div>
           </div>
