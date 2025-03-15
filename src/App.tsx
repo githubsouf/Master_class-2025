@@ -312,21 +312,22 @@ function App() {
             </div>
           </h2>
 
-          {/* Featured Video Review */}
-          <div className="mb-8">
-            <div className="relative rounded-xl overflow-hidden aspect-video mb-4">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://youtu.be/ki5A25zAb2k"
-                title="Featured Review"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <p className="text-sm text-gray-300">
-              "Watch how this masterclass transformed my business approach completely!"
-            </p>
-          </div>
+         {/* Featured Video Review */}
+<div className="mb-8">
+  <div className="relative rounded-xl overflow-hidden aspect-video mb-4">
+    <iframe
+      className="absolute inset-0 w-full h-full"
+      src="https://www.youtube.com/embed/ki5A25zAb2k"
+      title="Featured Review"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  </div>
+  <p className="text-sm text-gray-300">
+    "Watch how this masterclass transformed my business approach completely!"
+  </p>
+</div>
+
 
           {/* Image Reviews Grid */}
           <div className="grid grid-cols-3 gap-4 mb-8">
