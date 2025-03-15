@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Copy, Users, Upload, CheckCircle, CircleDollarSign, ChevronRight, Phone } from "lucide-react";
+import { Copy, Users,Play, Upload, CheckCircle, CircleDollarSign, ChevronRight, Phone, Star } from "lucide-react";
 import { db } from "../firebaseConfig"; // ✅ Import Firestore
 import { collection, addDoc } from "firebase/firestore"; // ✅ Firestore Methods
 import { motion, animate } from "framer-motion"; // 🎰 For animated number effects
@@ -252,21 +252,21 @@ function App() {
               />
             </div>
 
-            <div className="flex flex-col space-y-2">
-  <label htmlFor="secure24h" className="text-sm font-medium">
-    Sécuriser ma place :
-  </label>
-  <select
-    id="secure24h"
-    value={secure24h ? "24h" : "tomorrow"}
-    onChange={(e) => setSecure24h(e.target.value === "24h")}
-    className="w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-  >
-    <option value="tomorrow">Demain +2000 CFA</option>
-    <option value="24h">Sécuriser ma place durant 24h (même prix)</option>
-    
-  </select>
-</div>
+                                <div className="flex flex-col space-y-2">
+                      <label htmlFor="secure24h" className="text-sm font-medium">
+                        Sécuriser ma place :
+                      </label>
+                      <select
+                        id="secure24h"
+                        value={secure24h ? "24h" : "tomorrow"}
+                        onChange={(e) => setSecure24h(e.target.value === "24h")}
+                        className="w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      >
+                        <option value="tomorrow">Demain +2000 CFA</option>
+                        <option value="24h">Sécuriser ma place durant 24h (même prix)</option>
+                        
+                      </select>
+                    </div>
 
 
             <div>
@@ -299,9 +299,238 @@ function App() {
               <CheckCircle className="w-5 h-5" />
             </button>
           </form>
+          {/* Reviews Section */}
+        <div className="bg-gray-900 rounded-2xl p-6 md:p-8 shadow-xl mb-8">
+          <h2 className="text-xl font-bold mb-6 flex items-center">
+            What Others Say
+            <div className="flex ml-2">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+              ))}
+            </div>
+          </h2>
+
+          {/* Featured Video Review */}
+          <div className="mb-8">
+            <div className="relative rounded-xl overflow-hidden aspect-video mb-4">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://youtu.be/ki5A25zAb2k"
+                title="Featured Review"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <p className="text-sm text-gray-300">
+              "Watch how this masterclass transformed my business approach completely!"
+            </p>
+          </div>
+
+          {/* Image Reviews Grid */}
+          <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="relative group rounded-lg overflow-hidden">
+              <img
+                src="https://i.ibb.co/XZHF4YRr/certif.jpg"
+                alt="Success Story 1"
+                className="w-full h-32 object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-xs text-center p-2">"Certification de très haut niveau 💯 "</p>
+              </div>
+            </div>
+            <div className="relative group rounded-lg overflow-hidden">
+              <img
+                src="https://i.ibb.co/bjKMHDMp/ressources.jpg"
+                alt="Success Story 2"
+                className="w-full h-32 object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-xs text-center p-2">"Apprentissage facile et outils avancés 💡🚀"</p>
+              </div>
+            </div>
+            <div className="relative group rounded-lg overflow-hidden">
+              <img
+                src="https://i.ibb.co/R4pB6DcB/reveneue.jpg"
+                alt="Success Story 3"
+                className="w-full h-32 object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-xs text-center p-2">"Résultats garantis ✅🔥"</p>
+              </div>
+            </div>
+          </div>
+           {/* Local Video Review */}
+          <div className="mb-8">
+            <div className="relative rounded-xl overflow-hidden aspect-video mb-4 bg-gray-800">
+              <video
+                className="w-full h-full"
+                controls
+                poster="https://i.ibb.co/cS044m8C/image.png"
+              >
+                <source
+                  src="https://streamable.com/wl126d?src=player-page-share"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div className="flex items-center justify-between text-sm text-gray-300">
+              <p>"Direct testimonial from our most successful student"</p>
+              <div className="flex items-center">
+                <Play className="w-4 h-4 mr-1 text-blue-400" />
+                <span>Local Review</span>
+              </div>
+            </div>
+          </div>
+           {/* Image + Text Grid */}
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-gray-800 rounded-lg overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src="https://i.ibb.co/MxK1tr2t/i-Pymyj24-QRSg-Dobq-Jqf3-GGu-Cczb-ADg-NZfb-Py-Usp-O.jpg"
+                  alt="Success Story 1"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">Lamine Mba
+                </h3>
+                <p className="text-gray-300 text-sm">
+"Grâce à cette MasterClass, j’ai pu tester un marché en mettant à profit ma créativité. Je voulais appliquer ce que j’ai appris dans un marché anglophone en Afrique, et aujourd’hui, grâce à mon introduction à la vente digitale, avec tous ses fondamentaux, de la pratique et de la persévérance, je parviens à vendre depuis le Gabon en exploitant mes compétences acquises.
+
+"                </p>
+                <div className="flex items-center mt-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src="https://i.ibb.co/vxhKVxrZ/y-OGt0-Hl-MEH9r-Fl-ERY2yzww-EPJm-J7yf-ZOR8t-R2-Ha-E.jpg"
+                  alt="Success Story 2"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">Bryan Ekoume
+                </h3>
+                <p className="text-gray-300 text-sm">
+"Mes nouveaux clients, et c’est juste le début ! Merci BlackMountain pour cette opportunité. 💼🇬🇦
+
+
+"                </p>
+                <div className="flex items-center mt-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src="https://i.ibb.co/Y7C8H36h/k-Zj-Q07-AWVJQR7dc-PZm1-QWSK8p-Ssj-Uns9-TZs-Uc-Ti-N.jpg"
+                  alt="Success Story 3"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">Koffi N'Da
+                </h3>
+                <p className="text-gray-300 text-sm">
+'Dieu merci, j’étais parmi les premiers à l’acheter quand c’était à 21,000 CFA ! 🙌 Mais avec les résultats des élèves, je ne pense pas que le prix va rester le même. 🔥💯
+
+
+C’est un immense honneur d’être un témoin de ce programme ! 🙏📢
+
+
+'                </p>
+                <div className="flex items-center mt-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src="https://i.ibb.co/b5DpxBGY/TUame-Blk0mx5jp-Ysxjw7-Ff-Qtxe-BYyr-N9-CFm-V8g-EX.jpg"
+                  alt="Success Story 4"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">Arsène Sylla                </h3>
+                <p className="text-gray-300 text-sm">
+"J’ai testé le marché guinéen, et aucune déception ! ✅ Mais maintenant, je dois me déplacer pour investir mon produit dans ce marché.
+
+Je sais que BlackMountain a mentionné quelque part une prochaine MasterClass e-commerce pour toute l’Afrique. D’ailleurs, quand j’ai pris contact avec un collègue qui a bénéficié d’une consultation personnalisée, il m’a expliqué qu’ils ont des warehouses partout en Afrique, ce qui peut vraiment faciliter les choses !
+
+Heureusement, je peux travailler depuis le Gabon et exploiter ces opportunités. "                </p>
+                <div className="flex items-center mt-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+   
+          {/* Text Reviews */}
+          <div className="space-y-4">
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <div className="flex items-center mb-3">
+                <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                  <span className="font-bold">LM</span>
+                </div>
+                <div>
+                  <p className="font-semibold">Matteo Fares</p>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-300">"Avec ce certificat, j’ai gagné confiance et acquis le savoir-faire nécessaire pour travailler avec des agences, commerçants et entreprises afin de gérer leur publicité et maximiser leurs ventes ! 🇬🇦"</p>
+            </div>
+
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <div className="flex items-center mb-3">
+                <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center mr-3">
+                  <span className="font-bold">SB</span>
+                </div>
+                <div>
+                  <p className="font-semibold">Seydou Bamba
+                  </p>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-300">"Depuis l’arrivée de 2024, c’est notre essor vers la félicité ! Vraiment, votre MasterClass devrait être dans le domaine de l’e-commerce, mais je comprends… Avec toutes les ventes que tous les domaines peuvent générer, c’est un excellent choix en tout cas ! 🙌🔥
+
+Merciii, j’attends vos prochaines MasterClass avec impatience ! 🚀🇬🇦
+
+
+Avis "</p>
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
+    
   );
 }
 
