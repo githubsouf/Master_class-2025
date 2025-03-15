@@ -370,9 +370,16 @@ function App() {
       className="absolute inset-0 w-full h-full"
       src="https://streamable.com/e/wl126d"
       allowFullScreen
-      frameBorder="0"
-    ></iframe>
+      ></iframe>
   </div>
+  <div className="relative rounded-xl overflow-hidden aspect-video mb-4 bg-gray-800">
+  <iframe
+    className="absolute inset-0 w-full h-full"
+    src="https://streamable.com/e/8epkru"
+    allowFullScreen
+  ></iframe>
+</div>
+  
 </div>
             <div className="flex items-center justify-between text-sm text-gray-300">
               <p>"Direct testimonial from our most successful student"</p>
@@ -410,7 +417,7 @@ function App() {
             <div className="bg-gray-800 rounded-lg overflow-hidden">
               <div className="aspect-video">
                 <img
-                  src="https://i.ibb.co/vxhKVxrZ/y-OGt0-Hl-MEH9r-Fl-ERY2yzww-EPJm-J7yf-ZOR8t-R2-Ha-E.jpg"
+                  src=" https://i.ibb.co/JW7MFXYR/Capture-d-cran-2025-03-15-062239.png"
                   alt="Success Story 2"
                   className="w-full h-full object-cover"
                 />
