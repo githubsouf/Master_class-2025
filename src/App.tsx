@@ -141,6 +141,7 @@ function App() {
       
 
       alert("Données enregistrées avec succès !");
+      window.location.href = "https://bcmgroupe.youcan.store/products/clarus-payment-ga-copy";
       setFullName("");
       setSelectedFile(null);
       setSecure24h(false);
@@ -297,6 +298,7 @@ function App() {
             >
               <span>{isUploading ? "Uploading..." : "J'ai payé"}</span>
               <CheckCircle className="w-5 h-5" />
+              
             </button>
           </form>
           {/* Reviews Section */}
