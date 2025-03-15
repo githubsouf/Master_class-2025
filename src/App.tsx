@@ -364,19 +364,16 @@ function App() {
           </div>
            {/* Local Video Review */}
           <div className="mb-8">
-            <div className="relative rounded-xl overflow-hidden aspect-video mb-4 bg-gray-800">
-              <video
-                className="w-full h-full"
-                controls
-                poster="https://i.ibb.co/cS044m8C/image.png"
-              >
-                <source
-                  src="https://streamable.com/wl126d?src=player-page-share"
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-            </div>
+          <div className="mb-8">
+  <div className="relative rounded-xl overflow-hidden aspect-video mb-4 bg-gray-800">
+    <iframe
+      className="absolute inset-0 w-full h-full"
+      src="https://streamable.com/e/wl126d"
+      allowFullScreen
+      frameBorder="0"
+    ></iframe>
+  </div>
+</div>
             <div className="flex items-center justify-between text-sm text-gray-300">
               <p>"Direct testimonial from our most successful student"</p>
               <div className="flex items-center">
