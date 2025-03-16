@@ -28,6 +28,7 @@ function App() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isShaking, setIsShaking] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const optionsRef = useRef<HTMLDivElement>(null);
 
   const [visitors, setVisitors] = useState(202);
   const [spots, setSpots] = useState(44);
@@ -35,6 +36,11 @@ function App() {
 
   const visitorRef = useRef<HTMLSpanElement | null>(null);
   const spotsRef = useRef<HTMLSpanElement | null>(null);
+
+
+  const scrollToOptions = () => {
+    optionsRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const storedVisitors = localStorage.getItem("visitorsCount");
@@ -205,26 +211,26 @@ function App() {
               animate={{ x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Prix avant: 435.000 CFA
+              435.000 CFA
             </motion.div>
             <motion.div 
-              className="text-4xl font-bold text-blue-500 mb-1"
+              className="text-4xl font-bold text-white mb-1"
               initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
+              animate={{ scale: 0.9 }}
               transition={{ 
-                duration: 0.5,
+                duration: 0.3,
                 repeat: Infinity,
                 repeatType: "reverse",
-                repeatDelay: 2
+                repeatDelay: 0.3
               }}
             >
-              Prix actuel: 31.500 CFA
+              31.500 CFA
             </motion.div>
             <motion.div 
-              className="bg-blue-500 text-white text-sm px-3 py-1 rounded-full"
+              className=" text-white text-sm px-3 py-1 rounded-full"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.01, delay: 0. }}
             >
               Promotion spéciale
             </motion.div>
@@ -232,6 +238,7 @@ function App() {
         </motion.div>
 
         <motion.button 
+          onClick={scrollToOptions}
           className="bg-[#005eff] text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -293,7 +300,7 @@ function App() {
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="flex items-center text-white">
                     <Phone className="w-5 h-5 mr-2" />
-                    <span>076553626</span>
+                    <span>+241 76553626</span>
                   </div>
                 </div>
               </button>
@@ -327,7 +334,7 @@ function App() {
               </div>
             </motion.div>
 
-            <div className="flex flex-col space-y-2">
+            <div ref={optionsRef} className="flex flex-col space-y-2">
               <label htmlFor="secure24h" className="text-sm font-medium">
                 Sécuriser ma place :
               </label>
@@ -468,7 +475,7 @@ function App() {
               <p>"Direct testimonial from our most successful student"</p>
               <div className="flex items-center">
                 <Play className="w-4 h-4 mr-1 text-blue-400" />
-                <span>Local Review</span>
+                <span></span>
               </div>
             </div>
           </div>
