@@ -345,7 +345,7 @@ function App() {
                 className="w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="tomorrow">Demain +2000 CFA</option>
-                <option value="24h">Payer sous 24/h ( 31.500 cfa )</option>
+                <option value="24h">Payer sous 24/h ( 21.500 cfa )</option>
               </select>
             </div>
 
