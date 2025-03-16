@@ -224,7 +224,7 @@ function App() {
                 repeatDelay: 0.3
               }}
             >
-              31.500 CFA
+              21.500 CFA
             </motion.div>
             <motion.div 
               className=" text-white text-sm px-3 py-1 rounded-full"
