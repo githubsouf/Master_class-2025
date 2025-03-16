@@ -394,8 +394,8 @@ function App() {
           {/* Reviews Section */}
         <div className="bg-gray-900 rounded-2xl p-6 md:p-8 shadow-xl mb-8">
           <h2 className="text-xl font-bold mb-6 flex items-center">
-            What Others Say
-            <div className="flex ml-2">
+          Ce que disent les autres
+                      <div className="flex ml-2">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
               ))}
@@ -414,7 +414,7 @@ function App() {
     ></iframe>
   </div>
   <p className="text-sm text-gray-300">
-    "Watch how this masterclass transformed my business approach completely!"
+    "Regardez comment cette masterclass a complètement transformé mon approche des affaires !"
   </p>
 </div>
 
@@ -472,7 +472,7 @@ function App() {
   
 </div>
             <div className="flex items-center justify-between text-sm text-gray-300">
-              <p>"Direct testimonial from our most successful student"</p>
+              <p>"Témoignage direct de notre élève le plus accompli"</p>
               <div className="flex items-center">
                 <Play className="w-4 h-4 mr-1 text-blue-400" />
                 <span></span>
