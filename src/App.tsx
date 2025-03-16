@@ -141,7 +141,7 @@ function App() {
   };
 
   const handleCallPayment = () => {
-    window.location.href = 'tel:+212650069930';
+    window.location.href = 'tel:+24176553626';
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -300,7 +300,7 @@ function App() {
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="flex items-center text-white">
                     <Phone className="w-5 h-5 mr-2" />
-                    <span>+241 76553626</span>
+                    <span>076553626</span>
                   </div>
                 </div>
               </button>
@@ -326,7 +326,7 @@ function App() {
                   className={`w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none ${
                     errors.fullName ? 'border-2 border-red-500' : ''
                   }`}
-                  placeholder="Saisir vos nom et prénom"
+                  placeholder="Saisir votre nom et prénom"
                 />
                 {errors.fullName && (
                   <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
@@ -616,10 +616,7 @@ Heureusement, je peux travailler depuis le Gabon et exploiter ces opportunités.
               </div>
               <p className="text-gray-300">"Depuis l’arrivée de 2024, c’est notre essor vers la félicité ! Vraiment, votre MasterClass devrait être dans le domaine de l’e-commerce, mais je comprends… Avec toutes les ventes que tous les domaines peuvent générer, c’est un excellent choix en tout cas ! 🙌🔥
 
-Merciii, j’attends vos prochaines MasterClass avec impatience ! 🚀🇬🇦
-
-
-Avis "</p>
+Merciii, j’attends vos prochaines MasterClass avec impatience ! "</p>
             </div>
           </div>
         </div>
