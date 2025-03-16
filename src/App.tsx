@@ -5,7 +5,19 @@ import { collection, addDoc } from "firebase/firestore"; // ✅ Firestore Method
 import { motion, animate } from "framer-motion"; // 🎰 For animated number effects
 
 
-const API_KEY = "d6f7a6c356a8e345adfb6f50dace807f"; // ✅ ImgBB API Key
+const API_KEY = "d6f7a6c356a8e345adfb6f50dace807f";
+
+interface FormErrors {
+  fullName?: string;
+  file?: string;
+}
+
+interface Registration {
+  fullName: string;
+  proof: string;
+  secure24h: boolean;
+  timestamp: Date;
+}
 
 function App() {
   const [fullName, setFullName] = useState("");
@@ -13,19 +25,17 @@ function App() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isShaking, setIsShaking] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
 
-  // 🌟 Dynamic Visitors & Available Spots
   const [visitors, setVisitors] = useState(202);
   const [spots, setSpots] = useState(44);
   const [initialAnimation, setInitialAnimation] = useState(true);
 
-    // For smooth animation
-    const visitorRef = useRef<HTMLSpanElement | null>(null);
-    const spotsRef = useRef<HTMLSpanElement | null>(null);
+  const visitorRef = useRef<HTMLSpanElement | null>(null);
+  const spotsRef = useRef<HTMLSpanElement | null>(null);
 
-  // Get User's IP for Keeping Numbers Consistent
   useEffect(() => {
     const storedVisitors = localStorage.getItem("visitorsCount");
     const storedSpots = localStorage.getItem("spotsCount");
@@ -41,31 +51,26 @@ function App() {
     }
   }, []);
 
-  // Increment Visitors, Decrement Available Spots Slowly
   useEffect(() => {
     const updateNumbers = () => {
-      setVisitors((prev) => Math.min(prev + 1, 233)); // Max 233 Visitors
-      setSpots((prev) => Math.max(prev - 1, 10)); // Min 10 Spots Left
+      setVisitors((prev) => Math.min(prev + 1, 233));
+      setSpots((prev) => Math.max(prev - 1, 10));
       localStorage.setItem("visitorsCount", visitors.toString());
       localStorage.setItem("spotsCount", spots.toString());
-  
-      // 🎰 Trigger animation on update
+
       animate(visitorRef.current, { y: [-10, 0], opacity: [0.5, 1] }, { duration: 0.5 });
       animate(spotsRef.current, { y: [-10, 0], opacity: [0.5, 1] }, { duration: 0.5 });
-  
-      // Set a random interval between 2 and 9 seconds
+
       const randomDelay = Math.floor(Math.random() * (9000 - 2000 + 1)) + 2000;
       setTimeout(updateNumbers, randomDelay);
     };
-  
-    // Start the first update
+
     const initialDelay = Math.floor(Math.random() * (9000 - 2000 + 1)) + 2000;
     const timeoutId = setTimeout(updateNumbers, initialDelay);
-  
-    return () => clearTimeout(timeoutId); // Cleanup on unmount
+
+    return () => clearTimeout(timeoutId);
   }, [visitors, spots]);
-  
-  // Initial Animation from 0 to Value
+
   useEffect(() => {
     if (initialAnimation) {
       animate(0, 202, {
@@ -79,21 +84,45 @@ function App() {
     }
   }, [initialAnimation]);
 
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!fullName.trim()) {
+      newErrors.fullName = "Le nom complet est requis";
+    } else if (fullName.length < 3) {
+      newErrors.fullName = "Le nom doit contenir au moins 3 caractères";
+    }
+
+    if (!selectedFile) {
+      newErrors.file = "Le reçu de paiement est requis";
+    }
+
+    setErrors(newErrors);
+    
+    if (Object.keys(newErrors).length > 0) {
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
+      return false;
+    }
+
+    return true;
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        alert("Please upload an image file");
+        setErrors({ ...errors, file: "Veuillez télécharger une image" });
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
-        alert("File size should be less than 5MB");
+        setErrors({ ...errors, file: "La taille du fichier doit être inférieure à 5 Mo" });
         return;
       }
       setSelectedFile(file);
+      setErrors({ ...errors, file: undefined });
     }
   };
-  
 
   const handleCopyLink = async () => {
     try {
@@ -101,9 +130,10 @@ function App() {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
-      alert("Failed to copy link");
+      alert("Échec de la copie du lien");
     }
   };
+
   const handleCallPayment = () => {
     window.location.href = 'tel:+212650069930';
   };
@@ -111,17 +141,15 @@ function App() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!fullName || !selectedFile) {
-      alert("Veuillez remplir tous les champs !");
+    if (!validateForm()) {
       return;
     }
 
     setIsUploading(true);
 
     try {
-      // 🔹 Step 1: Upload Image to ImgBB
       const formData = new FormData();
-      formData.append("image", selectedFile);
+      formData.append("image", selectedFile!);
 
       const res = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
         method: "POST",
@@ -129,7 +157,7 @@ function App() {
       });
 
       const data = await res.json();
-      const imageUrl = data.data.url; // ✅ Extract image URL
+      const imageUrl = data.data.url;
 
       // 🔹 Step 2: Save Data to Firestore
       await addDoc(collection(db, "registrations"), {
@@ -152,17 +180,64 @@ function App() {
 
     setIsUploading(false);
   };
+  
 
   return (
     <div className="min-h-screen bg-black text-white p-4 md:p-8">
+      {/* Header Section */}
       {/* Header Section */}
       <header className="text-center mb-12">
         <CircleDollarSign className="w-16 h-16 mx-auto mb-6 text-blue-500" />
         <h1 className="text-2xl md:text-4xl font-bold mb-2">MASTERCLASS SESSION 2025</h1>
         <p className="text-xl md:text-3xl mb-6">L'ASSEMBLÉE DES CRÉATEURS DE RICHESSE</p>
-        <button className="bg-[#005eff] text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+        
+        {/* Price Section */}
+        <motion.div 
+          className="bg-gray-900 rounded-xl p-6 max-w-md mx-auto mb-6"
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex flex-col items-center">
+            <motion.div 
+              className="text-red-500 line-through mb-2 text-lg"
+              initial={{ x: -20 }}
+              animate={{ x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              Prix avant: 435.000 CFA
+            </motion.div>
+            <motion.div 
+              className="text-4xl font-bold text-blue-500 mb-1"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ 
+                duration: 0.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                repeatDelay: 2
+              }}
+            >
+              Prix actuel: 31.500 CFA
+            </motion.div>
+            <motion.div 
+              className="bg-blue-500 text-white text-sm px-3 py-1 rounded-full"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Promotion spéciale
+            </motion.div>
+          </div>
+        </motion.div>
+
+        <motion.button 
+          className="bg-[#005eff] text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           SÉCURISE TON ACCÈS
-        </button>
+        </motion.button>
       </header>
 
       {/* Main Checkout Section */}
@@ -176,7 +251,7 @@ function App() {
               {copySuccess ? "Copied!" : "Copy"}
             </button>
           </div>
-
+          
          {/* 🎰 Dynamic Animated Stats Section */}
          <div className="grid grid-cols-2 gap-4 mb-8">
             <div className="bg-gray-800 p-4 rounded-lg text-center">
@@ -187,7 +262,7 @@ function App() {
               >
                 {visitors}
               </motion.span>
-              <p className="text-sm">Visitors on sécuriser</p>
+              <p className="text-sm">Visiteurs on sécurisé</p>
             </div>
             <div className="bg-gray-800 p-4 rounded-lg text-center">
             <Users className="w-6 h-6 mx-auto mb-2 text-blue-400" />
@@ -203,27 +278,12 @@ function App() {
           </div>
              {/* Payment Options */}
              <div className="mb-8">
-            <h2 className="text-xl font-bold mb-4">Payment Methods</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <h2 className="text-xl font-bold mb-4">Méthode de paiement</h2>
+            <div className="grid grid-cols-1   gap-4">
+              
               <button 
                 onClick={handleCallPayment}
-                className="group relative bg-gray-800 rounded-lg overflow-hidden transition-transform hover:scale-105"
-              >
-                <img 
-                  src="https://i.ibb.co/27cgvg6f/airtel-wite.jpg" 
-                  alt="Airtel Money" 
-                  className="w-full h-24 object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="flex items-center text-white">
-                    <Phone className="w-5 h-5 mr-2" />
-                    <span>+212650069930</span>
-                  </div>
-                </div>
-              </button>
-              <button 
-                onClick={handleCallPayment}
-                className="group relative bg-gray-800 rounded-lg overflow-hidden transition-transform hover:scale-105"
+                className="group relative bg-gray-800  rounded-lg overflow-hidden transition-transform hover:scale-105"
               >
                 <img 
                   src="https://i.ibb.co/rf7Gg8DQ/airtel-red.jpg" 
@@ -233,7 +293,7 @@ function App() {
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="flex items-center text-white">
                     <Phone className="w-5 h-5 mr-2" />
-                    <span>+212650069930</span>
+                    <span>076553626</span>
                   </div>
                 </div>
               </button>
@@ -241,52 +301,75 @@ function App() {
           </div>
           {/* Payment Form */}
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label className="block text-sm font-medium mb-2">Nom Prénom</label>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+            <motion.div
+              animate={{ x: isShaking ? [-10, 10, -10, 10, 0] : 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div>
+                <label className="block text-sm font-medium mb-2">Saisissez Votre Nom & Prénom</label>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                    if (errors.fullName) {
+                      setErrors({ ...errors, fullName: undefined });
+                    }
+                  }}
+                  className={`w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none ${
+                    errors.fullName ? 'border-2 border-red-500' : ''
+                  }`}
+                  placeholder="Saisir vos nom et prénom"
+                />
+                {errors.fullName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                )}
+              </div>
+            </motion.div>
+
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="secure24h" className="text-sm font-medium">
+                Sécuriser ma place :
+              </label>
+              <select
+                id="secure24h"
+                value={secure24h ? "24h" : "tomorrow"}
+                onChange={(e) => setSecure24h(e.target.value === "24h")}
                 className="w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Enter your full name"
-                required
-              />
+              >
+                <option value="tomorrow">Demain +2000 CFA</option>
+                <option value="24h">Payer sous 24/h ( 31.500 cfa )</option>
+              </select>
             </div>
 
-                                <div className="flex flex-col space-y-2">
-                      <label htmlFor="secure24h" className="text-sm font-medium">
-                        Sécuriser ma place :
-                      </label>
-                      <select
-                        id="secure24h"
-                        value={secure24h ? "24h" : "tomorrow"}
-                        onChange={(e) => setSecure24h(e.target.value === "24h")}
-                        className="w-full bg-gray-800 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                      >
-                        <option value="tomorrow">Demain +2000 CFA</option>
-                        <option value="24h">Sécuriser ma place durant 24h (même prix)</option>
-                        
-                      </select>
-                    </div>
-
-
             <div>
-              <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleFileUpload} 
+                accept="image/*" 
+                className="hidden" 
+              />
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full bg-gray-800 rounded-lg px-4 py-3 text-left flex items-center space-x-3 hover:bg-gray-700 transition-colors"
+                className={`w-full bg-gray-800 rounded-lg px-4 py-3 text-left flex items-center space-x-3 hover:bg-gray-700 transition-colors ${
+                  errors.file ? 'border-2 border-red-500' : ''
+                }`}
               >
                 <Upload className="w-5 h-5 text-blue-400" />
-                <span>{selectedFile ? selectedFile.name : "Télécharger reçu de paiement"}</span>
+                <span>{selectedFile ? selectedFile.name : "Importer Reçu de paiement"}</span>
               </button>
+              {errors.file && (
+                <p className="text-red-500 text-sm mt-1">{errors.file}</p>
+              )}
             </div>
 
             {selectedFile && (
               <div className="bg-gray-800 p-4 rounded-lg">
                 <p className="text-sm text-green-400 flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2" />
-                  Screenshot uploaded successfully
+                  Reçu téléchargé avec succès
                 </p>
               </div>
             )}
@@ -296,11 +379,11 @@ function App() {
               className="w-full bg-[#005eff] text-white py-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
               disabled={isUploading}
             >
-              <span>{isUploading ? "Uploading..." : "J'ai payé"}</span>
+              <span>{isUploading ? "Téléchargement..." : "J'ai payé"}</span>
               <CheckCircle className="w-5 h-5" />
-              
             </button>
           </form>
+
           {/* Reviews Section */}
         <div className="bg-gray-900 rounded-2xl p-6 md:p-8 shadow-xl mb-8">
           <h2 className="text-xl font-bold mb-6 flex items-center">
