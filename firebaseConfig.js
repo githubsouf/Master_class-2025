@@ -4,13 +4,12 @@ import { getFirestore } from "firebase/firestore"; // ✅ Import Firestore
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBjs7f553IJxhuD3NIqpCRogjXO75Uu9Ts",
-  authDomain: "master-class-ceb6c.firebaseapp.com",
-  projectId: "master-class-ceb6c",
-  storageBucket: "master-class-ceb6c.appspot.com",
-  messagingSenderId: "909454960409",
-  appId: "1:909454960409:web:f3025fb80bf053915a8788",
-  measurementId: "G-2HDY6HSNRC"
+  apiKey: "AIzaSyD2uUkqajCYaLFCVxODr-HiD3zntny7wXE",
+  authDomain: "master-class-senegal.firebaseapp.com",
+  projectId: "master-class-senegal",
+  storageBucket: "master-class-senegal.firebasestorage.app",
+  messagingSenderId: "90336133949",
+  appId: "1:90336133949:web:259faa5badcd7819e87b54"
 };
 
 // Initialize Firebase

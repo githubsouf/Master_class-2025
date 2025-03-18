@@ -141,7 +141,7 @@ function App() {
   };
 
   const handleCallPayment = () => {
-    window.location.href = 'tel:+24176553626';
+    window.location.href = 'tel:+ 221 78 828 26 67';
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -293,14 +293,14 @@ function App() {
                 className="group relative bg-gray-800  rounded-lg overflow-hidden transition-transform hover:scale-105"
               >
                 <img 
-                  src="https://i.ibb.co/rf7Gg8DQ/airtel-red.jpg" 
+                  src="https://i.ibb.co/bM0nh5Cs/orange-logo.webp" 
                   alt="Airtel Money" 
                   className="w-full h-24 object-cover"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="flex items-center text-white">
                     <Phone className="w-5 h-5 mr-2" />
-                    <span>076553626</span>
+                    <span>+ 221 78 828 26 67</span>
                   </div>
                 </div>
               </button>
