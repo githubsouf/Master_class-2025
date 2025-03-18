@@ -29,7 +29,7 @@ function App() {
   const [isShaking, setIsShaking] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
-  const price = "20,000";
+  const price = "25,000";
   const [visitors, setVisitors] = useState(202);
   const [spots, setSpots] = useState(44);
   const [initialAnimation, setInitialAnimation] = useState(true);
