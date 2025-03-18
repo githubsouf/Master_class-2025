@@ -175,7 +175,7 @@ function App() {
       
 
       alert("Données enregistrées avec succès !");
-      window.location.href = "https://bcmgroupe.youcan.store/products/clarus-payment-ga-copy";
+      window.location.href = "https://bcmgroupe.youcan.store/products/masterclass-ga-session-2025-copy";
       setFullName("");
       setSelectedFile(null);
       setSecure24h(false);
