@@ -293,8 +293,24 @@ function App() {
                 className="group relative bg-gray-800  rounded-lg overflow-hidden transition-transform hover:scale-105"
               >
                 <img 
-                  src="https://i.ibb.co/bM0nh5Cs/orange-logo.webp" 
-                  alt="Airtel Money" 
+                  src="https://i.ibb.co/sk5wDTW/Whats-App-Image-2025-03-19-22-20-01-a2e375d8.jpg" 
+                  alt="Wave" 
+                  className="w-full h-24 object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center text-white">
+                    <Phone className="w-5 h-5 mr-2" />
+                    <span>+ 221 78 828 26 67</span>
+                  </div>
+                </div>
+              </button>
+              <button 
+                onClick={handleCallPayment}
+                className="group relative bg-gray-800  rounded-lg overflow-hidden transition-transform hover:scale-105"
+              >
+                <img 
+                  src="https://i.ibb.co/fzDhSK3G/Capture-d-cran-2025-03-19-224709.png" 
+                  alt="Orange" 
                   className="w-full h-24 object-cover"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
